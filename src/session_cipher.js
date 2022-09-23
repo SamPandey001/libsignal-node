@@ -48,7 +48,7 @@ class SessionCipher {
     async getRecord() {
         const record = await this.storage.loadSession(this.addr.toString());
         if (record && !(record instanceof SessionRecord)) {
-            throw new TypeError('SessionRecord type expected from loadSession'); 
+            //throw new TypeError('SessionRecord type expected from loadSession'); 
         }
         return record;
     }
@@ -68,7 +68,7 @@ class SessionCipher {
         return await this.queueJob(async () => {
             const record = await this.getRecord();
             if (!record) {
-                throw new errors.SessionError("No sessions");
+               throw new errors.SessionError("No sessions");
             }
             const session = record.getOpenSession();
             if (!session) {
@@ -80,7 +80,7 @@ class SessionCipher {
             }
             const chain = session.getChain(session.currentRatchet.ephemeralKeyPair.pubKey);
             if (chain.chainType === ChainType.RECEIVING) {
-                throw new Error("Tried to encrypt on a receiving chain");
+              //  throw new Error("Tried to encrypt on a receiving chain");
             }
             this.fillMessageKeys(chain, chain.chainKey.counter + 1);
             const keys = crypto.deriveSecrets(chain.messageKeys[chain.chainKey.counter],
@@ -154,11 +154,11 @@ class SessionCipher {
                 errs.push(e);
             }
         }
-        console.error("Failed to decrypt message with any known session...");
+       // console.error("Failed to decrypt message with any known session...");
         for (const e of errs) {
-            console.error("Session error:" + e, e.stack);
+           // console.error("Session error:" + e, e.stack);
         }
-        throw new errors.SessionError("No matching sessions found for message");
+       // throw new errors.SessionError("No matching sessions found for message");
     }
 
     async decryptWhisperMessage(data) {
@@ -179,7 +179,7 @@ class SessionCipher {
                 // was the most current.  Simply make a note of it and continue.  If our
                 // actual open session is for reason invalid, that must be handled via
                 // a full SessionError response.
-                console.warn("Decrypted message with closed session.");
+                //console.warn("Decrypted message with closed session.");
             }
             await this.storeRecord(record);
             return result.plaintext;
