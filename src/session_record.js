@@ -278,7 +278,7 @@ class SessionRecord {
         if (!this.isClosed(session)) {
             console.warn("Session already open");
         }
-        console.info("Opening session:", session);
+        console.info("Opening session:");
         session.indexInfo.closed = -1;
     }
 
