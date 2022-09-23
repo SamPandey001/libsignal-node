@@ -22,7 +22,7 @@ exports.generateSignedPreKey = function(identityKeyPair, signedKeyId) {
         throw new TypeError('Invalid argument for identityKeyPair');
     }
     if (!isNonNegativeInteger(signedKeyId)) {
-        throw new TypeError('Invalid argument for signedKeyId: ' + signedKeyId);
+        throw new TypeError('Invalid argument for signedKeyId: ');
     }
     const keyPair = curve.generateKeyPair();
     const sig = curve.calculateSignature(identityKeyPair.privKey, keyPair.pubKey);
@@ -35,7 +35,7 @@ exports.generateSignedPreKey = function(identityKeyPair, signedKeyId) {
 
 exports.generatePreKey = function(keyId) {
     if (!isNonNegativeInteger(keyId)) {
-        throw new TypeError('Invalid argument for keyId: ' + keyId);
+        throw new TypeError('Invalid argument for keyId: ');
     }
     const keyPair = curve.generateKeyPair();
     return {
